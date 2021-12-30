@@ -6,16 +6,18 @@ from selenium import webdriver
 # or import time; time.sleep(5)
 from time import sleep
 
-# my laptop chromedriver path to use
-PATH = "C:\Program Files (x86)\chromedriver.exe"
-driver = webdriver.Chrome(PATH)
-
 
 # https://stackoverflow.com/questions/69418411/how-to-get-rid-of-response-messages-initiating-google-chrome-using-chromedriver
 #from selenium.webdriver.chrome.options import Options
 # for getting rid of print statements from machine to help clear my debugs
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+
+
+# my laptop chromedriver path to use
+PATH = "C:\Program Files (x86)\chromedriver.exe"
+driver = webdriver.Chrome(executable_path=PATH, options=options)
 
 
 # open google.com website
@@ -37,17 +39,26 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 # tanjiro bl out of stock
 #driver.get("https://www.boxlunch.com/product/funko-pop-animation-demon-slayer-kimetsu-no-yaiba-tanjiro-kamado-water-breathing-glow-in-the-dark-vinyl-figure---boxlunch-exclusive/13399920.html")
 
-driver.get("https://www.hottopic.com/product/funko-dc-comics-pop-heroes-two-face-vinyl-figure-2021-l.a.-comic-con-exclusive/15925194.html?cgid=funko#cm_sp=Homepage-_-Hero-_-LACCFunko&start=1")
+#driver.get("https://www.hottopic.com/product/funko-dc-comics-pop-heroes-two-face-vinyl-figure-2021-l.a.-comic-con-exclusive/15925194.html?cgid=funko#cm_sp=Homepage-_-Hero-_-LACCFunko&start=1")
+
+
+# box lunch tanjiro dragon
+# driver.get("https://www.boxlunch.com/product/funko-pop-animation-demon-slayer-kimetsu-no-yaiba-tanjiro-kamado-water-breathing-glow-in-the-dark-vinyl-figure---boxlunch-exclusive/13399920.html")
+# hot topic tanjiro training
+driver.get("https://www.hottopic.com/product/funko-demon-slayer-kimetsu-no-yaiba-pop-animation-tanjiro-with-mask-vinyl-figure-hot-topic-exclusive/13412216.html")
+
+
 try:
     in_stock = driver.find_element_by_class_name('color-green')
     print("DEBUG:", in_stock.text)
 except:
-    print("DEBUG: no stock found?")
+    print("DEBUG: no color-green class")
 
-counter = 0
+counter = 1
 while (counter != 0):
-    counter -= 1
-    driver.get("https://www.hottopic.com/product/funko-demon-slayer-kimetsu-no-yaiba-pop-animation-nezuko-kamado-vinyl-figure/13407577.html?cgid=funko")
+    print("DEBUG: counter:", counter)
+    # box lunch tanjiro dragon
+    driver.get("https://www.boxlunch.com/product/funko-pop-animation-demon-slayer-kimetsu-no-yaiba-tanjiro-kamado-water-breathing-glow-in-the-dark-vinyl-figure---boxlunch-exclusive/13399920.html")
     try: 
         add_to_cart = driver.find_element_by_id('add-to-cart')
         print("DEBUG: IN STOCK")
@@ -55,7 +66,17 @@ while (counter != 0):
     except:
         print("DEBUG: NO ADD TO CART ID")
 
-    sleep(10)
+    # hot topic tanjiro training
+    driver.get("https://www.hottopic.com/product/funko-demon-slayer-kimetsu-no-yaiba-pop-animation-tanjiro-with-mask-vinyl-figure-hot-topic-exclusive/13412216.html")
+    try: 
+        add_to_cart = driver.find_element_by_id('add-to-cart')
+        print("DEBUG: IN STOCK")
+        print("DEBUG: ADD TO CART ID:", add_to_cart.text)
+    except:
+        print("DEBUG: NO ADD TO CART ID")
+
+    counter -= 1
+    sleep(5)
 
 '''
 try: 
@@ -65,7 +86,7 @@ except:
     print("DEBUG: NO ADD TO CART ID")
 '''
 
-print("DEBUG: DONE WITH PROGRAM")
+print("\nDEBUG: DONE WITH PROGRAM")
 
 #driver.get("https://www.hottopic.com/product/funko-demon-slayer-kimetsu-no-yaiba-pop-animation-tanjiro-with-mask-vinyl-figure-hot-topic-exclusive/13412216.html")
 
