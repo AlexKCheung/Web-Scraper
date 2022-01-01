@@ -31,12 +31,13 @@ driver = webdriver.Chrome(executable_path=PATH, options=options)
 # hot topic tanjiro training
 # driver.get("https://www.hottopic.com/product/funko-demon-slayer-kimetsu-no-yaiba-pop-animation-tanjiro-with-mask-vinyl-figure-hot-topic-exclusive/13412216.html")
 
-
+'''
 try:
     in_stock = driver.find_element_by_class_name('color-green')
     print("DEBUG:", in_stock.text)
 except:
     print("DEBUG: no color-green class")
+'''
 
 # Wishlist check in stock orders instead of individual websites: can check all at once
 # hot topic and box lunch have essentially the same websites (sister companies)
@@ -44,6 +45,40 @@ except:
 # Presale: "on-order"
 # Out of stock: "notavailable"
 
+
+counter = 5
+while (counter != 0):
+    print("DEBUG: counter:", counter)
+    # box lunch wishlist
+    driver.get("https://www.hottopic.com/showotherwishlist?WishListID=aeff70bb93d57f2d850769dc99")
+    try: 
+        # in stock 
+        can_buy = driver.find_element_by_class_name('is-in-stock')
+        print("DEBUG: BL IN STOCK!")
+    except:
+        # presale
+        try: 
+            can_buy = driver.find_element_by_class_name('on-order')
+            print("DEBUG: BL CAN PRESALE!")
+        except:
+            print("DEBUG: BL no stock")
+
+    # hot topic wishlist
+    driver.get("https://www.boxlunch.com/showotherwishlist?WishListID=a9eb980965a10adbfc6edb0556")
+    try: 
+        # in stock
+        can_buy = driver.find_element_by_class_name('is-in-stock')
+        print("DEBUG: HT IN STOCK!")
+    except:
+        # presale
+        try: 
+            can_buy = driver.find_element_by_class_name('on-order')
+            print("DEBUG: HT CAN PRESALE!")
+        except:
+            print("DEBUG: HT no stock")
+
+    counter -= 1
+    sleep(0)
 
 
 
