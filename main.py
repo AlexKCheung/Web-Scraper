@@ -26,6 +26,9 @@ driver = webdriver.Chrome(executable_path=PATH, options=options)
 # print(driver.current_url)
 #print(driver.current_window_handle)
 
+# refresh page
+# driver.refresh()
+
 # box lunch tanjiro dragon
 # driver.get("https://www.boxlunch.com/product/funko-pop-animation-demon-slayer-kimetsu-no-yaiba-tanjiro-kamado-water-breathing-glow-in-the-dark-vinyl-figure---boxlunch-exclusive/13399920.html")
 # hot topic tanjiro training
@@ -47,7 +50,8 @@ except:
 
 
 counter = 5
-while (counter != 0):
+can_buy_something = False
+while (counter != 0 and not can_buy_something):
     print("DEBUG: counter:", counter)
     # hot topic wishlist
     driver.get("https://www.hottopic.com/showotherwishlist?WishListID=aeff70bb93d57f2d850769dc99")
