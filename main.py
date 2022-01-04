@@ -6,12 +6,14 @@ from selenium import webdriver
 # or import time; time.sleep(5) 
 from time import sleep
 
-
 # https://stackoverflow.com/questions/69418411/how-to-get-rid-of-response-messages-initiating-google-chrome-using-chromedriver
 #from selenium.webdriver.chrome.options import Options
 # for getting rid of print statements from machine to help clear my debugs
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
+
+# headless chrome 
+options.add_argument("--headless")
 
 # my laptop chromedriver path to use
 PATH = "C:\Program Files (x86)\chromedriver.exe"
@@ -49,20 +51,22 @@ except:
 # Out of stock: "notavailable"
 
 
-counter = 5
-can_buy_something = False
-while (counter != 0 and not can_buy_something):
+counter = 2
+still_searching = True
+while (counter > 0 and still_searching):
     print("DEBUG: counter:", counter)
     # hot topic wishlist
     driver.get("https://www.hottopic.com/showotherwishlist?WishListID=aeff70bb93d57f2d850769dc99")
     try: 
         # in stock 
         can_buy = driver.find_element_by_class_name('is-in-stock')
+        still_searching = False
         print("DEBUG: HT IN STOCK!")
     except:
         # presale
         try: 
             can_buy = driver.find_element_by_class_name('on-order')
+            still_searching = False
             print("DEBUG: HT CAN PRESALE!")
         except:
             print("DEBUG: HT no stock")
@@ -72,11 +76,13 @@ while (counter != 0 and not can_buy_something):
     try: 
         # in stock
         can_buy = driver.find_element_by_class_name('is-in-stock')
+        still_searching = False
         print("DEBUG: BL IN STOCK!")
     except:
         # presale
         try: 
             can_buy = driver.find_element_by_class_name('on-order')
+            still_searching = False
             print("DEBUG: BL CAN PRESALE")
         except:
             print("DEBUG: BL no stock")
@@ -120,8 +126,12 @@ except:
     print("DEBUG: NO ADD TO CART ID")
 '''
 
-print("\nDEBUG: DONE WITH PROGRAM")
 
+if (still_searching):
+    print("DEBUG: searches ended: nothing in stock")
+else:
+    print("SOMETHING IS IN STOCK!")
+print("DEBUG: DONE WITH PROGRAM")
 
 # sleep 5 seconds
 # sleep(5)
