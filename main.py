@@ -12,8 +12,17 @@ from time import sleep
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
+
+# MAY VARY BETWEEN USERS
+# load default profile instead of canonical form
+# chrome profile data in chrome://version/ in address bar
+# C:\Users\Acai\AppData\Local\Google\Chrome\User Data
+#options.add_argument(r"user-data-dir=C:\Users\Acai\AppData\Local\Google\Chrome\User Data")
+# couldnt get to work along with driver PATH
+
+
 # headless chrome 
-options.add_argument("--headless")
+#options.add_argument("--headless")
 
 # my laptop chromedriver path to use
 PATH = "C:\Program Files (x86)\chromedriver.exe"
@@ -50,6 +59,8 @@ except:
 # Presale: "on-order"
 # Out of stock: "notavailable"
 
+# potential: somehow clear cache after each refresh? If needed
+# Will take longer to load but will always display most up to date
 
 counter = 2
 still_searching = True
